@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <script>
+            function calculate() {
+                var f = document.getElementById('form'),
+                        e = f.elements,
+                        a1 = e['a1'],
+                        a2 = e['a2'],
+                        sign = e['sign'],
+                        out = e['out'];
+                f.onsubmit = function() {
+                    return false;
+                };
+                f.oninput = f.onchange = function() {
+                    switch (sign.value) {
+                        case '+':
+                            out.value = a1.valueAsNumber + a2.valueAsNumber;
+                            break;
+                        default:
+                            out.value = 'ERROR';
+                    }
+                };
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Calculations!</h1>
+        <h2>Input numbers for calculation</h2>
+        <form id="form">
+            <p>
+                <input onchange="calculate()" name="a1" type="number" step="any" value="1">
+                <select onchange="calculate()" name="sign">
+                    <option value="+" selected="selected">+</option>
+                    <option value="todo">todo</option>
+                </select>
+                <input onchange="calculate()" name="a2" type="number" step="any" value="1">
+                <output name="out"/>
+            </p>
+        </form>
+        <h2>Changelog</h2>
+        <ul>
+            <li>release/1.0.0.0
+                <ul>
+                    <li>feature/1 Initial page</li>
+                </ul>
+            </li>
+        </ul>
+    </body>
+</html>
