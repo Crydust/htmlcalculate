@@ -70,11 +70,14 @@ var micro = (function(window, document) {
         var i, leni, options, option, nodeName = getNodeName(element);
         if (nodeName === 'INPUT' || nodeName === 'TEXTAREA' || nodeName === 'BUTTON') {
             return element.value;
-        }
-        if (nodeName === 'OUTPUT') {
-            return element.innerHTML;
-        }
-        if (nodeName === 'SELECT') {
+        } else if (nodeName === 'OUTPUT') {
+            var value = element.value;
+            if (value === undefined) {
+                //IE11
+                value = element.innerText;
+            }
+            return value;
+        } else if (nodeName === 'SELECT') {
             options = toArray(element.options);
             for (i = 0, leni = options.length; i < leni; i += 1) {
                 option = options[i];
@@ -85,6 +88,8 @@ var micro = (function(window, document) {
             if (options.length > 0) {
                 return options[0].value;
             }
+        } else {
+            throw new Error('IllegalStateException');
         }
         return null;
     }
@@ -96,11 +101,10 @@ var micro = (function(window, document) {
         }
         if (nodeName === 'INPUT' || nodeName === 'TEXTAREA' || nodeName === 'BUTTON') {
             element.value = value;
-        }
-        if (nodeName === 'OUTPUT') {
-            element.innerHTML = value;
-        }
-        if (nodeName === 'SELECT') {
+        } else if (nodeName === 'OUTPUT') {
+            element.innerText = value;
+            element.value = value;
+        } else if (nodeName === 'SELECT') {
             options = toArray(element.options);
             for (i = 0, leni = options.length; i < leni; i += 1) {
                 option = options[i];
@@ -108,6 +112,8 @@ var micro = (function(window, document) {
                     option.selected = true;
                 }
             }
+        } else {
+            throw new Error('IllegalStateException');
         }
     }
 
@@ -141,32 +147,57 @@ var micro = (function(window, document) {
     MicroNode.prototype.debounce = debounce;
 
     function byId(id) {
-        return new MicroNode(document.getElementById(id));
+        var elById = document.getElementById(id);
+        if (elById !== null) {
+            return new MicroNode(elById);
+        }
+        return null;
     }
 
-    function bySelector(selector) {
-        var matches, id, tag, attr, val, potentials, i, leni;
-        if (IDEXPR.test(selector)) {
-            return byId(selector.substring(1));
+    function byIdAndTagName(id, tag) {
+        console.log('byIdAndTagName');
+        var elById = document.getElementById(id);
+        if (elById !== null) {
+            console.log('elById', elById);
+            console.log('typeof elById.getElementsByTagName', typeof elById.getElementsByTagName);
+            var elsByTagName = elById.getElementsByTagName(tag);
+            if (elsByTagName.length !== 0) {
+                return new MicroNode(elsByTagName[0]);
+            }
         }
-        if (IDTAGEXPR.test(selector)) {
-            matches = selector.match(IDTAGEXPR);
-            id = matches[1];
-            tag = matches[2];
-            return new MicroNode(document.getElementById(id).getElementsByTagName(tag)[0]);
-        }
-        if (IDTAGATTREXPR.test(selector)) {
-            matches = selector.match(IDTAGATTREXPR);
-            id = matches[1];
-            tag = matches[2];
-            attr = matches[3];
-            val = matches[4];
-            potentials = toArray(document.getElementById(id).getElementsByTagName(tag));
+        return null;
+    }
+
+    function byIdAndTagNameAndAttributeAndAttributeValue(id, tag, attr, val) {
+        var elById = document.getElementById(id);
+        if (elById !== null) {
+            var potentials = elById.getElementsByTagName(tag);
             for (i = 0, leni = potentials.length; i < leni; i += 1) {
                 if (potentials[i].hasAttribute(attr) && potentials[i].getAttribute(attr) === val) {
                     return new MicroNode(potentials[i]);
                 }
             }
+        }
+        return null;
+    }
+
+    function bySelector(selector) {
+        var matches, id, tag, attr, val, potentials, i, leni;
+        if (IDEXPR.test(selector)) {
+            id = selector.substring(1);
+            return byId(id);
+        } else if (IDTAGEXPR.test(selector)) {
+            matches = selector.match(IDTAGEXPR);
+            id = matches[1];
+            tag = matches[2];
+            return byIdAndTagName(id, tag);
+        } else if (IDTAGATTREXPR.test(selector)) {
+            matches = selector.match(IDTAGATTREXPR);
+            id = matches[1];
+            tag = matches[2];
+            attr = matches[3];
+            val = matches[4];
+            return byIdAndTagNameAndAttributeAndAttributeValue(id, tag, attr, val);
         }
         return null;
     }
@@ -207,15 +238,14 @@ var micro = (function(window, document) {
     }());
 
     function publicmicro(arg0) {
-        if (typeof arg0 === 'function') {
-            docReady(arg0);
-        }
         if (typeof arg0 === 'string') {
             return bySelector(arg0);
-        }
-        if (typeof arg0 === 'object') {
+        } else if (typeof arg0 === 'object') {
             return new MicroNode(arg0);
+        } else if (typeof arg0 === 'function') {
+            docReady(arg0);
         }
+        return null;
     }
 
     publicmicro.debounce = debounce;
