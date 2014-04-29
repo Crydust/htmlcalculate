@@ -169,6 +169,7 @@ var micro = (function(window, document) {
     }
 
     function byIdAndTagNameAndAttributeAndAttributeValue(id, tag, attr, val) {
+        var i, leni;
         var elById = document.getElementById(id);
         if (elById !== null) {
             var potentials = elById.getElementsByTagName(tag);
@@ -182,7 +183,7 @@ var micro = (function(window, document) {
     }
 
     function bySelector(selector) {
-        var matches, id, tag, attr, val, potentials, i, leni;
+        var matches, id, tag, attr, val;
         if (IDEXPR.test(selector)) {
             id = selector.substring(1);
             return byId(id);

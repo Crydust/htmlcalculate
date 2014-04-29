@@ -1,3 +1,5 @@
+/*global micro, describe, it, expect, runs, waitsFor, affix */
+
 describe('micro', function() {
     describe('select', function() {
         it('should find elements by id', function() {
