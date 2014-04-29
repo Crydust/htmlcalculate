@@ -18,27 +18,28 @@
                 <output name="out" for="a1 sign a2">2</output>
             </p>
         </form>
+        <script src="js/micro.js"></script>
         <script>
-            (function() {
-                var f = document.getElementById('form');
-                f.onsubmit = function() {
-                    return false;
-                };
-                f.onkeyup = f.onchange = f.oninput = function() {
-                    var e = f.elements,
-                            a1 = e['a1'],
-                            a2 = e['a2'],
-                            sign = e['sign'],
-                            out = f.getElementsByTagName('output')[0];
-                    switch (sign.value) {
+            micro(function(µ) {
+                var f = µ('#form'),
+                        a1 = µ('#form input[name="a1"]'),
+                        a2 = µ('#form input[name="a2"]'),
+                        sign = µ('#form select[name="sign"]'),
+                        out = µ('#form output');
+                function calc() {
+                    switch (sign.val()) {
                         case '+':
-                            out.innerHTML = parseFloat(a1.value) + parseFloat(a2.value);
+                            out.val(parseFloat(a1.val()) + parseFloat(a2.val()));
                             break;
                         default:
                             out.innerHTML = 'ERROR';
                     }
-                };
-            }());
+                }
+                f.on('submit', function() {
+                    return false;
+                });
+                f.on('keyup change input', µ.debounce(calc, 100, false));
+            });
         </script>
         <h2>Changelog</h2>
         <ul>
