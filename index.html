@@ -19,28 +19,7 @@
             </p>
         </form>
         <script src="js/micro.js"></script>
-        <script>
-            micro(function(µ) {
-                var f = µ('#form'),
-                        a1 = µ('#form input[name="a1"]'),
-                        a2 = µ('#form input[name="a2"]'),
-                        sign = µ('#form select[name="sign"]'),
-                        out = µ('#form output');
-                function calc() {
-                    switch (sign.val()) {
-                        case '+':
-                            out.val(parseFloat(a1.val()) + parseFloat(a2.val()));
-                            break;
-                        default:
-                            out.innerHTML = 'ERROR';
-                    }
-                }
-                f.on('submit', function() {
-                    return false;
-                });
-                f.on('keyup change input', µ.debounce(calc, 100, false));
-            });
-        </script>
+        <script src="js/app.js"></script>
         <h2>Changelog</h2>
         <ul>
             <li>release/1.0.0.0
