@@ -10,23 +10,18 @@
         <form id="form">
             <p>
                 <input name="a1" type="number" step="any" value="1" />
-                <select name="sign">
+                <select name="op">
                     <option value="+" selected="selected">+</option>
                     <option>todo</option>
                 </select>
                 <input name="a2" type="number" step="any" value="1" />
-                <output name="out" for="a1 sign a2">2</output>
+                <output name="out" for="a1 op a2">2</output>
             </p>
         </form>
         <script src="js/micro.js"></script>
         <script src="js/app.js"></script>
-        <h2>Changelog</h2>
-        <ul>
-            <li>release/1.0.0.0
-                <ul>
-                    <li>feature/1 Initial page</li>
-                </ul>
-            </li>
-        </ul>
+        <script>
+            app.run(micro);
+        </script>
     </body>
 </html>

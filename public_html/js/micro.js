@@ -1,6 +1,6 @@
 /*jslint browser: true, sloppy: true */
 
-var micro = (function(window, document) {
+(function(window, document) {
 
     var ELEMENT_NODE = 1,
             IDEXPR = /^#(?:[\w\-]+)$/,
@@ -211,7 +211,7 @@ var micro = (function(window, document) {
         function ready() {
             readyFired = true;
             for (var i = 0; i < readyList.length; i++) {
-                readyList[i].call(null, publicmicro);
+                readyList[i].call(null, public);
             }
             readyList = [];
         }
@@ -238,7 +238,7 @@ var micro = (function(window, document) {
         };
     }());
 
-    function publicmicro(arg0) {
+    function public(arg0) {
         if (typeof arg0 === 'string') {
             return bySelector(arg0);
         } else if (typeof arg0 === 'object') {
@@ -249,8 +249,8 @@ var micro = (function(window, document) {
         return null;
     }
 
-    publicmicro.debounce = debounce;
+    public.debounce = debounce;
 
-    return publicmicro;
+    window.micro = public;
 
 }(window, document));

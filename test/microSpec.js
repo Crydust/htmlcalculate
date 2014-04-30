@@ -1,4 +1,4 @@
-/*global micro, describe, it, expect, runs, waitsFor, affix */
+/*global micro, describe, ddescribe, it, iit, expect, runs, waitsFor, affix */
 
 describe('micro', function() {
     describe('select', function() {
