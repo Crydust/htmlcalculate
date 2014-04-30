@@ -1,6 +1,21 @@
 /*jslint browser: true, sloppy: true */
 
-(function(window, document) {
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['require', 'exports', 'module'], factory);
+    } else if (typeof exports === 'object') {
+        factory(require, exports, module);
+    } else {
+        var require = function() {
+        };
+        var exports = {};
+        var module = {
+            'exports': exports
+        };
+        factory(require, exports, module);
+        root.micro = module.exports;
+    }
+}(this, function(require, exports, module) {
 
     var ELEMENT_NODE = 1,
             IDEXPR = /^#(?:[\w\-]+)$/,
@@ -238,7 +253,7 @@
         };
     }());
 
-    function public(arg0) {
+    module.exports = function(arg0) {
         if (typeof arg0 === 'string') {
             return bySelector(arg0);
         } else if (typeof arg0 === 'object') {
@@ -249,8 +264,6 @@
         return null;
     }
 
-    public.debounce = debounce;
+    module.exports.debounce = debounce;
 
-    window.micro = public;
-
-}(window, document));
+}));
