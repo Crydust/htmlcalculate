@@ -170,11 +170,8 @@
     }
 
     function byIdAndTagName(id, tag) {
-        console.log('byIdAndTagName');
         var elById = document.getElementById(id);
         if (elById !== null) {
-            console.log('elById', elById);
-            console.log('typeof elById.getElementsByTagName', typeof elById.getElementsByTagName);
             var elsByTagName = elById.getElementsByTagName(tag);
             if (elsByTagName.length !== 0) {
                 return new MicroNode(elsByTagName[0]);
@@ -226,7 +223,7 @@
         function ready() {
             readyFired = true;
             for (var i = 0; i < readyList.length; i++) {
-                readyList[i].call(null, public);
+                readyList[i].call(null);
             }
             readyList = [];
         }

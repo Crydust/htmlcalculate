@@ -18,7 +18,9 @@
         factory(require, exports, module, root.micro);
         root.app = module.exports;
     }
-}(this, function(require, exports, module, micro) {
+}(this, function(require, exports, module/*, micro*/) {
+
+    var micro = require('micro');
 
     function assertType(val, type) {
         if (typeof val !== type) {
