@@ -17,6 +17,8 @@ module.exports = function(config) {
         ],
         // list of files to exclude
         exclude: [
+            'public_html/js/lib/require.js/require.js',
+            'public_html/js/main.js'
         ],
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
