@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "karma": "^0.10",
+    "karma-cli": "0.0.4",
+    "karma-ie-launcher": "~0.1",
+    "karma-coverage": "~0.1"
+  }
+}
