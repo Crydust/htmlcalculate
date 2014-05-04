@@ -29,7 +29,6 @@
         switch (op) {
             case '+':
                 return a1 + a2;
-                break;
             default:
                 return 'ERROR';
         }
