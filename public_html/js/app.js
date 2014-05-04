@@ -1,24 +1,18 @@
 (function(root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['require', 'exports', 'module', 'micro'], factory);
-    } else if (typeof exports === 'object') {
+    } else if (typeof module !== 'undefined' && module.exports) {
         factory(require, exports, module, require('micro'));
     } else {
         var require = function(name) {
-            switch (name) {
-                case 'micro':
-                    return root.micro;
-            }
-            return null;
-        };
-        var exports = {};
-        var module = {
+            return root[name];
+        }, exports = {}, module = {
             'exports': exports
         };
-        factory(require, exports, module, root.micro);
+        factory(require, exports, module);
         root.app = module.exports;
     }
-}(this, function(require, exports, module/*, micro*/) {
+}(this, function(require, exports, module) {
 
     var micro = require('micro');
 
