@@ -1,18 +1,4 @@
-(function(name, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(factory);
-    } else if (typeof module !== 'undefined' && module.exports) {
-        factory(require, exports, module);
-    } else {
-        var require = function(name) {
-            return this[name];
-        }, exports = {}, module = {
-            'exports': exports
-        };
-        factory(require, exports, module);
-        this[name] = module.exports;
-    }
-}('docready', function(require, exports, module) {
+define(function(require, exports, module) {
 
     var readyList = [];
     var readyFired = false;
@@ -49,4 +35,4 @@
         }
     };
 
-}));
+});
