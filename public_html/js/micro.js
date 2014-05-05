@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 
-    var docready = require('docready');
+    var domReady = require('domReady');
 
     var ELEMENT_NODE = 1,
             IDEXPR = /^#(?:[\w\-]+)$/,
@@ -206,7 +206,7 @@ define(function(require, exports, module) {
         } else if (typeof arg0 === 'object') {
             return new MicroNode(arg0);
         } else if (typeof arg0 === 'function') {
-            docready(arg0);
+            domReady(arg0);
         }
         return null;
     }
