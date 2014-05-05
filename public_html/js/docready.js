@@ -1,18 +1,18 @@
-(function(root, factory) {
+(function(name, factory) {
     if (typeof define === 'function' && define.amd) {
-        define(['require', 'exports', 'module'], factory);
+        define(factory);
     } else if (typeof module !== 'undefined' && module.exports) {
         factory(require, exports, module);
     } else {
-        var require = function() {
-            return root[name];
+        var require = function(name) {
+            return this[name];
         }, exports = {}, module = {
             'exports': exports
         };
         factory(require, exports, module);
-        root.docready = module.exports;
+        this[name] = module.exports;
     }
-}(this, function(require, exports, module) {
+}('docready', function(require, exports, module) {
 
     var readyList = [];
     var readyFired = false;

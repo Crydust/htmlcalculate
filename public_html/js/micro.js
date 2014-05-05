@@ -1,18 +1,18 @@
-(function(root, factory) {
+(function(name, factory) {
     if (typeof define === 'function' && define.amd) {
-        define(['require', 'exports', 'module', 'docready'], factory);
+        define(factory);
     } else if (typeof module !== 'undefined' && module.exports) {
         factory(require, exports, module);
     } else {
         var require = function(name) {
-            return root[name];
+            return this[name];
         }, exports = {}, module = {
             'exports': exports
         };
         factory(require, exports, module);
-        root.micro = module.exports;
+        this[name] = module.exports;
     }
-}(this, function(require, exports, module) {
+}('micro', function(require, exports, module) {
 
     var docready = require('docready');
 

@@ -1,18 +1,18 @@
-(function(root, factory) {
+(function(name, factory) {
     if (typeof define === 'function' && define.amd) {
-        define(['require', 'exports', 'module', 'micro'], factory);
+        define(factory);
     } else if (typeof module !== 'undefined' && module.exports) {
-        factory(require, exports, module, require('micro'));
+        factory(require, exports, module);
     } else {
         var require = function(name) {
-            return root[name];
+            return this[name];
         }, exports = {}, module = {
             'exports': exports
         };
         factory(require, exports, module);
-        root.app = module.exports;
+        this[name] = module.exports;
     }
-}(this, function(require, exports, module) {
+}('app', function(require, exports, module) {
 
     var micro = require('micro');
 
