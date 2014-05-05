@@ -11,6 +11,10 @@ for (var file in window.__karma__.files) {
 requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/public_html/js',
+    
+    paths: {
+        'domReady': 'lib/require-domReady/domReady'
+    },
 
     // ask Require.js to load these files (all our tests)
     deps: tests,

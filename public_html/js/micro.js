@@ -1,20 +1,6 @@
-(function(root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(['require', 'exports', 'module', 'docready'], factory);
-    } else if (typeof module !== 'undefined' && module.exports) {
-        factory(require, exports, module);
-    } else {
-        var require = function(name) {
-            return root[name];
-        }, exports = {}, module = {
-            'exports': exports
-        };
-        factory(require, exports, module);
-        root.micro = module.exports;
-    }
-}(this, function(require, exports, module) {
+define(function(require, exports, module) {
 
-    var docready = require('docready');
+    var domReady = require('domReady');
 
     var ELEMENT_NODE = 1,
             IDEXPR = /^#(?:[\w\-]+)$/,
@@ -220,11 +206,11 @@
         } else if (typeof arg0 === 'object') {
             return new MicroNode(arg0);
         } else if (typeof arg0 === 'function') {
-            docready(arg0);
+            domReady(arg0);
         }
         return null;
     }
 
     module.exports.debounce = debounce;
 
-}));
+});
