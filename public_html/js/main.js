@@ -1,6 +1,6 @@
 require.config({
     paths: {
-        'domReady': 'libs/require-domReady/domReady'
+        'domReady': 'lib/require-domReady/domReady'
     }
 });
 require(['app'], function(app) {

@@ -13,7 +13,7 @@ requirejs.config({
     baseUrl: '/base/public_html/js',
     
     paths: {
-        'domReady': 'libs/require-domReady/domReady'
+        'domReady': 'lib/require-domReady/domReady'
     },
 
     // ask Require.js to load these files (all our tests)
